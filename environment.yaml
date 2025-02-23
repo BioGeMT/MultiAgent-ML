@@ -10,7 +10,7 @@ dependencies:
   - pip
   - pip:
     - smolagents
-    - smolagents[litellm]
+    - "smolagents[litellm]"
     - openinference-instrumentation-smolagents
     - opentelemetry-exporter-otlp
     - opentelemetry-sdk
