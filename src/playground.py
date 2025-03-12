@@ -26,7 +26,7 @@ config = {
     "tags" : ["testing"],
     "tools" : [{tool.name} for tool in tools],
     "tools_args" : [{tool.name, str(tool.args)} for tool in tools if hasattr(tool, "args")],
-    "prompt" : "toolcalling_agent.yaml",
+    "prompt" : "dimos_prompt_1.yaml",
     "planning_interval" : None,
 }
 
