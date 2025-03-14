@@ -23,7 +23,7 @@ config = {
     "temperature" : 1,
     "max_steps" : 30,
     "dataset" : "human_non_tata_promoters",
-    "tags" : ["testing"],
+    "tags" : ["exp_prompt_dimos"],
     "tools" : [{tool.name} for tool in tools],
     "tools_args" : [{tool.name, str(tool.args)} for tool in tools if hasattr(tool, "args")],
     "prompt" : "dimos_prompt_1.yaml",
@@ -77,7 +77,7 @@ Make sure to tokenize for all characters from the alphabet.
 class: 1 if the promoter is a non-TATA promoter, 0 otherwise
 """
 
-agent.run(user_prompt)
-evaluate_log_run(config)
-replay(agent)
-
+for i in range(10):
+    agent.run(user_prompt)
+    evaluate_log_run(config)
+    replay(agent)
