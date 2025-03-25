@@ -29,7 +29,7 @@ for i in range(10):
         "tags" : ["exp_prompt_dimos"],
         "tools" : [{tool.name} for tool in tools],
         "tools_args" : [{tool.name, str(tool.args)} for tool in tools if hasattr(tool, "args")],
-        "prompt" : "dimos_prompt_1.yaml",
+        "prompt" : "BioPrompt_v1.yaml",
         "planning_interval" : None,
     }
 
