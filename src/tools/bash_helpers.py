@@ -52,6 +52,7 @@ class BashProcess:
     def __init__(
         self,
         agent_id,
+        autoconda=True,
         strip_newlines: bool = False,
         return_err_output: bool = False,
         persistent: bool = False,
@@ -65,10 +66,30 @@ class BashProcess:
         self.prompt = ""
         self.process = None
         self.timeout = timeout
+        self.agent_id = agent_id
+        self.autoconda = autoconda
         if persistent:
             self.prompt = str(uuid4())
             self.process = self._initialize_persistent_process(self, self.prompt, agent_id)
+            if(autoconda):
+                self.create_conda_env()
+                self.activate_conda_env()
 
+    def custom_reset(self):
+        self.prompt = str(uuid4())
+        self.process = self._initialize_persistent_process(self, self.prompt, self.agent_id)
+        if(self.autoconda):
+            self.activate_conda_env()
+
+    def create_conda_env(self):
+        self.run(
+            f"conda create -n {self.agent_id}_env -y"
+        )
+
+    def activate_conda_env(self):
+        self.run(
+            f"source activate {self.agent_id}_env"
+        )
 
     @staticmethod
     def _lazy_import_pexpect() -> pexpect:
@@ -190,7 +211,8 @@ class BashProcess:
         try:
             self.process.expect([self.prompt, pexpect.EOF], timeout=self.timeout)
         except pexpect.TIMEOUT:
-            return f"Timeout error while executing command {command}"
+            self.custom_reset()
+            return f"Timeout error while executing command {command}. " + "Resetting bash to it's default state."
         if self.process.after == pexpect.EOF:
             return f"Exited with error status: {self.process.exitstatus}"
         output = self.process.before
