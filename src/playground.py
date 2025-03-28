@@ -27,7 +27,7 @@ for _ in range(1):
         "max_steps" : 30,
         "dataset" : "human_non_tata_promoters",
         "tags" : ["testing"],
-        "prompt" : "toolcalling_agent.yaml",
+        "prompt" : "BioPrompt_v1.yaml",
         "planning_interval" : None,
     }
     tools = [
@@ -94,4 +94,3 @@ for _ in range(1):
     evaluate_log_run(config)
     replay(agent)
     wandb.finish()
-
